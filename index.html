@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year 🎉</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      height: 100vh;
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1a2a6c, #0f2027 60%);
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .container {
+      z-index: 2;
+      padding: 2rem;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #ffd700, #ff9f1c, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .year {
+      font-size: clamp(4rem, 10vw, 7rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    }
+
+    button {
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #ff9f1c, #ffd700);
+      color: #1a1a1a;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+
+    /* Fireworks */
+    .firework {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: transparent;
+      border-radius: 50%;
+      animation: explode 1.5s ease-out infinite;
+    }
+
+    @keyframes explode {
+      0% {
+        box-shadow:
+          0 0 #ffd700,
+          0 0 #ff9f1c,
+          0 0 #ff4d4d,
+          0 0 #4dd2ff;
+        opacity: 1;
+      }
+      100% {
+        box-shadow:
+          -80px -80px #ffd700,
+          80px -80px #ff9f1c,
+          -80px 80px #ff4d4d,
+          80px 80px #4dd2ff;
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+      50% { text-shadow: 0 0 25px rgba(255,215,0,0.9); }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+      
+    /* Rocket */
+    .rocket {
+      position: absolute;
+      bottom: -20px;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(to top, #ff4d4d, #ffd700);
+      border-radius: 2px;
+      animation: flyUp 1.5s ease-out forwards;
+      box-shadow: 0 0 10px rgba(255,215,0,0.8);
+    }
+
+    @keyframes flyUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-90vh);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="year" id="year"></div>
+    <h1>Happy New Year!</h1>
+    <h2>Wishing you joy, success, and new beginnings ✨</h2>
+    <button onclick="launchFireworks()">Celebrate 🎆</button>
+  </div>
+
+  <footer>
+    Made with 🩷 by Abhi Raj Singh • Happy new year to all of you
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById('year');
+    yearEl.textContent = new Date().getFullYear();
+
+    function launchFireworks() {
+      for (let i = 0; i < 8; i++) {
+        createRocket();
+      }
+    }
+
+    function createRocket() {
+      const rocket = document.createElement('div');
+      rocket.className = 'rocket';
+      rocket.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(rocket);
+
+      rocket.addEventListener('animationend', () => {
+        explode(rocket.offsetLeft, rocket.offsetTop);
+        rocket.remove();
+      });
+    }
+
+    function explode(x, y) {
+      for (let i = 0; i < 12; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'firework';
+        spark.style.left = x + 'px';
+        spark.style.top = y + 'px';
+        spark.style.animationDelay = Math.random() * 0.5 + 's';
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 1500);
+      }
+    }
+
+    // Auto rockets
+    setInterval(launchFireworks, 2200);
+  </script>
+</body>
+</html>
+
